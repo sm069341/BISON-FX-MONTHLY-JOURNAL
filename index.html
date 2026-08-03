@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bison FX | Executive Monthly Journal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Google Fonts for Bison FX typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- html2canvas library for export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="navbar">
+    <div class="logo-container">
+      <img src="logo.png" alt="Bison FX Logo" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('alt-emoji').style.display='inline';">
+      <span id="alt-emoji" style="display:none; font-size:2rem;">🦬</span>
+      <div class="logo-text">
+        <span class="brand-bison">BISON</span> <span class="brand-fx">FX</span>
+      </div>
+    </div>
+    <div class="monthly-tag">MONTHLY EXECUTIVE EDITION</div>
+    <p class="tagline">Precision • Discipline • Performance</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Log Trade Form -->
+    <section class="form-card">
+      <div class="form-header">
+        <h3 class="form-title">Log Monthly Trade</h3>
+        <label class="checkbox-container">
+          <input type="checkbox" id="no-trade-check">
+          <span class="checkmark"></span>
+          Mark as "No-Trade Day"
+        </label>
+      </div>
+
+      <form id="trade-form" class="trade-form">
+        <div class="input-group">
+          <label>Date</label>
+          <input type="date" id="date" required>
+        </div>
+        <div class="input-group">
+          <label>Pair</label>
+          <input type="text" id="pair" placeholder="USD/CAD" required>
+        </div>
+        <div class="input-group">
+          <label>Session</label>
+          <select id="session">
+            <option value="London">London</option>
+            <option value="New York">New York</option>
+            <option value="Asian">Asian</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Timeframe</label>
+          <input type="text" id="timeframe" placeholder="1H" required>
+        </div>
+        <div class="input-group">
+          <label>Strategy</label>
+          <input type="text" id="strategy" placeholder="RBS" required>
+        </div>
+        <div class="input-group">
+          <label>Target (TP)</label>
+          <input type="number" id="target" placeholder="45 pips" min="0">
+        </div>
+        <div class="input-group">
+          <label>Stop Loss (SL)</label>
+          <input type="number" id="stoploss" placeholder="15 pips" min="0">
+        </div>
+        <div class="input-group">
+          <label>Risk-Free</label>
+          <select id="riskfree">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>R : R</label>
+          <input type="text" id="rr" placeholder="1 : 3.00">
+        </div>
+        <div class="input-group">
+          <label>Result</label>
+          <select id="result">
+            <option value="WIN">WIN</option>
+            <option value="LOSS">LOSS</option>
+            <option value="BE">BE</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-gold">+ Add Entry</button>
+      </form>
+    </section>
+
+    <!-- Export & Controls Header -->
+    <div class="export-controls">
+      <h3 class="section-title">Monthly Executive Controls</h3>
+      <div class="button-group">
+        <button id="clear-btn" class="btn-clear">🗑️ Clear Monthly Journal</button>
+        <button id="download-btn" class="btn-telegram">📸 Export Monthly Report</button>
+      </div>
+    </div>
+
+    <!-- COMBINED IMAGE EXPORT WRAPPER -->
+    <div id="export-wrapper" class="export-wrapper monthly-theme">
+      
+      <!-- Export Branding Banner -->
+      <div class="export-brand-header">
+        <img src="logo.png" alt="Bison FX" class="export-logo-img" onerror="this.style.display='none'; document.getElementById('alt-export-emoji').style.display='inline';">
+        <span id="alt-export-emoji" style="display:none; font-size:2.5rem;">🦬</span>
+        <div>
+          <h1 class="export-brand-title"><span class="white">BISON</span> <span class="gold">FX</span></h1>
+          <p class="export-tagline">MONTHLY EXECUTIVE PERFORMANCE REPORT</p>
+        </div>
+      </div>
+
+      <!-- 1. Table Section -->
+      <section class="log-container">
+        <div class="log-header">
+          <div class="header-indicator gold-glow"></div>
+          <div>
+            <h2>MONTHLY TRADING LOG <span id="week-range" class="week-range-text"></span></h2>
+            <p class="sub-heading">consistency • patience • discipline</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="trading-table">
+            <thead>
+              <tr>
+                <th>DATE</th>
+                <th>PAIR</th>
+                <th>SESSION</th>
+                <th>TIMEFRAME</th>
+                <th>STRATEGY</th>
+                <th>TARGET (TP)</th>
+                <th>STOP LOSS (SL)</th>
+                <th>RISK-FREE</th>
+                <th>RISK : REWARD</th>
+                <th>RESULT</th>
+                <th class="action-col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="trade-rows">
+              <!-- Dynamic Rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Monthly Totals Footer Bar -->
+        <div class="totals-summary-bar monthly-gold-bar">
+          <div class="totals-title">MONTHLY TOTAL ACCUMULATION</div>
+          <div class="totals-stats">
+            <div class="total-item">
+              <span class="total-label">TP GAINED:</span>
+              <span id="total-tp" class="total-value text-green">0 pips</span>
+            </div>
+            <div class="total-item">
+              <span class="total-label">SL LOST:</span>
+              <span id="total-sl" class="total-value text-red">0 pips</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Distinct Monthly Performance Card -->
+      <section class="export-card-section">
+        <div id="telegram-card" class="telegram-card monthly-card">
+          <div class="tg-header">
+            <div class="tg-brand">
+              <img src="logo.png" alt="Bison FX" class="tg-logo-img" onerror="this.style.display='none'; document.getElementById('alt-tg-emoji').style.display='inline';">
+              <span id="alt-tg-emoji" style="display:none; font-size:1.5rem;">🦬</span>
+              <span class="tg-title"><strong class="white">BISON</strong> <span class="gold">FX</span></span>
+            </div>
+            <span class="tg-badge gold-badge">MONTHLY RECAP</span>
+          </div>
+
+          <p class="tg-tagline">Executive Trading Analysis</p>
+          <div class="tg-divider gold-line"></div>
+
+          <div class="tg-stats-grid monthly-grid">
+            <div class="tg-stat-box gold-border">
+              <span class="tg-stat-label">NET MONTHLY PIPS</span>
+              <span class="tg-stat-value gold" id="tg-net-pips">0</span>
+            </div>
+            <div class="tg-stat-box gold-border">
+              <span class="tg-stat-label">WIN RATE %</span>
+              <span class="tg-stat-value" id="tg-win-rate">0%</span>
+            </div>
+            <div class="tg-stat-box gold-border">
+              <span class="tg-stat-label">TOTAL EXECUTIONS</span>
+              <span class="tg-stat-value" id="tg-total-trades">0</span>
+            </div>
+          </div>
+
+          <div class="tg-breakdown">
+            <div class="tg-pill win">WINS: <span id="tg-wins">0</span></div>
+            <div class="tg-pill loss">LOSSES: <span id="tg-losses">0</span></div>
+            <div class="tg-pill be">BE: <span id="tg-be">0</span></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
