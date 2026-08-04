@@ -157,10 +157,14 @@ function updateTelegramCard() {
     if (t.result === 'BE') be++;
   });
 
-  // COUNTING BE TRADES AS WINS (Non-Losing Trades / Win & Preservation Rate)
+  // 1. Calculate net pips
+  const netPips = totalTp - totalSl;
+
+  // 2. Calculate win rate (including BE as wins)
   const totalWinningTrades = wins + be;
   const winRate = totalTrades > 0 ? ((totalWinningTrades / totalTrades) * 100).toFixed(1) : 0;
 
+  // 3. Update DOM elements
   document.getElementById('tg-net-pips').innerText = `${netPips >= 0 ? '+' : ''}${netPips} pips`;
   document.getElementById('tg-win-rate').innerText = `${winRate}%`;
   document.getElementById('tg-total-trades').innerText = totalTrades;
